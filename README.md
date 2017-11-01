@@ -1,1 +1,1 @@
-# longzhizhi.github.io
+# https://longzhizhi.com/
