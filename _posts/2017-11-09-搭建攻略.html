@@ -1,0 +1,120 @@
+以模版建站方法（GitHub + Jekyll + themes），简化美化过程，降低技术难度。
+废话不多说，开始行动吧……
+
+思路与工具简介
+
+
+GitHub + Jekyll + themes
+思路简单地概括为 GitHub + Jekyll + themes，即利用GitHub的代码托管功能、Jekyll的静态网站管理工具和网络主题模版快速搭建个人网站，力图以简洁的列表和代码说明建站过程。
+
+建站需要的工具包含：
+
+Git: 安装和入门可以参见《入门基础》
+GitHub Pages
+Jekyll（含Gem和Bundle）
+测试平台：
+
+Mac OSX 10.9.5
+如果你有过上述工具使用经验，或者曾经百度尝试过GitHub + Jekyll，那么就更容易上手了。如果你是第一次看到这些词汇，可能需要些尝试和摸索，不过笔者尽力让步骤清晰。
+
+GitHub 快速搭建网站
+
+首先得安装 Git 版本管理工具，毕竟是在 GitHub 上托管的。然后，为了使用Jekyll还需要安装有 Ruby。所幸 Mac OSX 自带了这两样代码工具，这里不再赘述。后续内容都假设，读者已经阅读并了解了《Git 入门基础》。
+
+建立 repository
+
+登录 GitHub 账号，并新建一个代码库（repository）。这里账户名为: user，代码库名为: repository。
+
+Tips: 大多网络文章都强调并标明，该代码库的名称必须与账户名相同。其实不然，可以随意取名（例如，笔者将其取名为 personal）。但是，如果名称是用户名时，后续生成网址正好为最简短的形式，即 https://username.github.io；如果采用其他名称，则会在网址后额外添加一个项目名，例如 https://username.github.io/personal。
+将代码库拷贝到本地电脑
+
+git clone github.com/user/repository.git
+构建Branch —— gh-pages
+
+GitHub Pages 中明确定义了只有 gh-pages 分支的代码才会被自动生成网站链接，因此需要在拷贝下来的代码中添加对应分支。
+
+新建 gh-pages 分支
+
+cd repository
+git checkout --orphan gh-pages
+git rm -rf .    # 清空代码库
+提交网站更新
+
+后面就变成使用 Git 工具管理 GitHub 上的代码库了。特别注意的是，代码推送时需要指明推送至 gh-pages 分支。
+
+推送更新
+
+echo "Hello GitHub Pages!" > index.html    # 生成一个示例页面
+git add index.html                         # 添加至更新库
+git commit -a -m "First pages commit"      # 更新版本库
+git push origin gh-pages                   # 推送至 GitHub
+加载网站
+
+向网站推送更新之后，很快 GitHub 就会帮你自动完成网站搭建。点击以下链接，先看一眼吧。
+
+https://<username>.github.io/<repository>
+如果链接出现问题，GitHub 会向你的账户发送邮件。
+
+Jekyll + themes 快速丰富网站
+
+如果上述操作一切顺利，那你只得到了一行文字的网站，显然还不能达到你的心理预期。下面采用 Jekyll + themes 进行模版套用，这也是本文的重头戏。
+
+工具包安装
+
+检查 Ruby 版本号（必须高于ver-2.0.0，如果没有得先安装）
+
+ruby --version
+
+安装 Bundler（管理 Gem 相依性的工具，例如jekyll）
+
+gem install bundler
+
+安装 Jekyll
+
+首先需要在 repository 的根目录下生成 Gemfile 文件，内容为：
+
+source 'https://rubygems.org'
+gem 'github-pages', group: :jekyll_plugins
+采用 Bundler 安装 Jekyll
+
+bundle install
+至此，工具已经齐备了！
+
+使用 Jekyll 模版
+
+网络上提供了大量适用于 GitHub Pages 的 Jekyll 模版，推荐一个网站：
+
+Jekyll Themes
+各种风格任你选，去下载一个并解压将文件放到你的代码库（repository）根目录下。当然，适当的整理会略有帮助。
+
+本地服务器预览
+
+Jekyll 贴心地提供了一个本地预览服务器，用于离线编辑时预览网站效果。至此，你也可以启动服务器进行个人网站的预览啦。
+
+启动 Jekyll 预览服务器
+
+$ bundle exec jekyll serve
+Configuration file: /Users/octocat/my-site/\_config.yml
+            Source: /Users/octocat/my-site
+       Destination: /Users/octocat/my-site/\_site
+ Incremental build: disabled. Enable with --incremental
+    Generating...
+                done in 0.309 seconds.
+ Auto-regeneration: enabled for '/Users/octocat/my-site'
+Configuration file: /Users/octocat/my-site/\_config.yml
+    Server address: http://0.0.0.1:4000/
+  Server running... press ctrl-c to stop.
+通过本地浏览器打开 Server address: http://0.0.0.1:4000/ 生成的链接，你的个人网页就展现在你面前了。当然，网页信息都还是模版自带，以后的工作就变成了修改本地文件并使用 GitHub 进行代码托管了。
+
+向 GitHub 完成网络更新
+
+如果预览效果已经满意了，那么就向 GitHub 代码库进行推送更新吧。
+
+git add .
+git commit -m "First pages commit"
+git push origin gh-pages
+Tips: 模版目录中 _site 是由 Jekyll 转换生成，用于保存本地预览页面，因此建议将 _site 目录放进你的 .gitignore 文件中。
+推送更新完成后，登录你的个人网站 https://<username>.github.io/<repository> 看看效果吧！
+
+作者：么的聊
+链接：http://www.jianshu.com/p/85ca31174488
