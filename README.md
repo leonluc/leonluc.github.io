@@ -1,1 +1,1 @@
-# https://longzhizhi.com/
+# http://ixinan.cn
